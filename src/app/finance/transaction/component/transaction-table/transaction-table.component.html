@@ -1,0 +1,22 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Balance</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactionList index as i"
+        [ngClass]="{'table-danger': transaction.total < 0, 'table-success': transaction.total > 0}">
+
+      <td (click)="select(transaction)">{{transaction.date | date: 'fullDate'}}</td>
+      <td (click)="select(transaction)">{{transaction.descriptionText}}</td>
+      <td (click)="select(transaction)">{{transaction.total | currency: '$'}}</td>
+      <td (click)="select(transaction)">{{getBalance(i) | currency: '$'}}</td>
+      <td><button class="btn btn-danger" (click)="delete(transaction)"><i class="fa fa-trash"></i></button></td>
+    </tr>
+  </tbody>
+</table>

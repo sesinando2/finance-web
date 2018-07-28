@@ -1,0 +1,46 @@
+<div class="modal-header" *ngIf="title">{{title}}</div>
+
+<div class="modal-body">
+  <form class="needs-validation" novalidate [formGroup]="form">
+    <app-text-input name="name" label="Name" placeholder="Name to identify this budget allocation"
+                    helpText="Please enter a unique name for your budget allocation."
+                    [form]="form" [formState]="budget.name"
+                    [errorMap]="nameErrorMap" [validators]="required" [asyncValidator]="uniqueBudgetNameValidator.bind(this)"
+    ></app-text-input>
+
+    <app-textarea-input name="description" label="Description"
+                        placeholder="A brief description that best describes this budget allocation."
+                        helpText="Please enter a short description for your budget allocation."
+                        [form]="form" [formState]="budget.description"
+    ></app-textarea-input>
+
+    <app-money-input name="amount" label="Amount"
+                     placeholder="0.00"
+                     helpText="Please enter the amount you want to allocate."
+                     [form]="form" [formState]="budget.amount"
+                     [errorMap]="amountErrorMap" [validators]="[required, shouldBeGreaterThanZeroValidator]"
+    ></app-money-input>
+
+    <app-select-input name="frequency" label="Frequency"
+                      placeholder="Choose how frequent budget is allocated..."
+                      helpText="Please select how often this budget is allocated."
+                      [options]="frequencyOptions"
+                      [form]="form" [formState]="budget.frequency"
+                      [validators]="required" [errorMap]="frequencyErrorMap"
+    ></app-select-input>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-secondary mr-auto" [disabled]="!allowCancel" (click)="cancel()">
+    Cancel
+  </button>
+
+  <button class="btn btn-danger" *ngIf="showDeleteButton" [disabled]="!allowDelete" (click)="delete()">
+    <i class="fa fa-trash"></i> Delete
+  </button>
+
+  <button class="btn btn-primary" [disabled]="!allowSave" (click)="save()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>

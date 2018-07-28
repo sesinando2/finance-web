@@ -1,0 +1,14 @@
+<form [formGroup]="form">
+  <app-date-input name="date" label="Date"
+                  placeholder="dd/mm/yyyy."
+                  helpText="When the transaction is made"
+                  [form]="form" [formState]="transaction.date"
+                  [validators]="required" [errorMap]="dateErrors"
+  ></app-date-input>
+
+  <app-textarea-input name="description" label="Description"
+                      placeholder="A brief description of your transaction."
+                      helpText="Please enter a short description of your transaction."
+                      [form]="form" [formState]="transaction.description"
+  ></app-textarea-input>
+</form>

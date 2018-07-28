@@ -1,0 +1,16 @@
+<app-base-input [label]="label" [helpText]="helpText" [errorMessage]="firstErrorText">
+  <div class="input-group">
+    <input class="form-control" id="{{name}}" name="{{name}}" attr.aria-describedby="{{name + 'HelpText'}}"
+           placeholder="yyyy-mm-dd" ngbDatepicker #datePicker="ngbDatepicker" #datePickerInput
+           [minDate]="minimumDate"
+           [formControl]="formControl"
+           [ngClass]="{'is-valid': this.isValid, 'is-invalid': this.isInvalid}"
+           (focus)="datePicker.open()">
+
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="datePicker.toggle()" type="button" #datePickerButton>
+        <i class="fa fa-calendar"></i>
+      </button>
+    </div>
+  </div>
+</app-base-input>

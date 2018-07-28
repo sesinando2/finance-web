@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">{{title}}</h1>
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      <button class="btn btn-sm btn-outline-secondary" (click)="clickNew()"><i class="fa fa-plus"></i> New</button>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-start">
+  <div class="col-md-auto">
+    <app-account-breadcrumb></app-account-breadcrumb>
+  </div>
+</div>
+
+<div class="row">
+  <div class="account-list col-md-3">
+    <app-account-list></app-account-list>
+  </div>
+
+  <div class="col-md-9">
+    <main>
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
+    </main>
+  </div>
+</div>

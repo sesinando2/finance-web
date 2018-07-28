@@ -1,0 +1,7 @@
+<app-base-input [label]="label" [helpText]="helpText" [errorMessage]="firstErrorText">
+  <select class="form-control" id="{{name}}" attr.aria-describedby="{{name + 'HelpText'}}"
+          [formControl]="formControl" name="{{name}}" [ngClass]="{'is-valid': this.isValid, 'is-invalid': this.isInvalid}">
+    <option selected ngValue="">{{placeholder}}</option>
+    <option *ngFor="let option of options" [ngValue]="option.value">{{option.label}}</option>
+  </select>
+</app-base-input>

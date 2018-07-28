@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-header">
+    <app-account-links [account]="account"></app-account-links>
+  </div>
+
+  <div class="card-body">
+    <app-transaction-table *ngIf="transactionList.length >0 ; else emptyTransaction"
+                           [account]="account"
+                           [transactionList]="transactionList"
+    ></app-transaction-table>
+  </div>
+
+  <ng-template #emptyTransaction>
+    No transaction found.
+  </ng-template>
+</div>

@@ -1,0 +1,21 @@
+<ngx-charts-advanced-pie-chart
+  *ngIf="chartData.length > 0"
+  [view]="view"
+  [results]="chartData"
+  [gradient]="true"
+  (select)="onSelect($event)"
+  scheme="forest"
+  label="Income"
+></ngx-charts-advanced-pie-chart>
+
+<ngx-charts-advanced-pie-chart
+  *ngIf="debitChardData.length > 0"
+  [view]="view"
+  [results]="debitChardData"
+  [gradient]="true"
+  (select)="onSelect($event)"
+  scheme="fire"
+  label="Expense"
+></ngx-charts-advanced-pie-chart>
+
+<p class="alert alert-warning" *ngIf="chartData.length == 0 && debitChardData.length == 0">No allocation data.</p>

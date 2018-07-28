@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <app-account-links [account]="account"></app-account-links>
+
+    <app-frequency-selector></app-frequency-selector>
+  </div>
+
+  <div class="card-body" #cardBody>
+    <app-budget-chart
+      [container]="cardBody"
+      [budgetList]="budgetList"
+      [height]="0"
+      (onBudgetSelected)="onBudgetSelected($event)"
+    ></app-budget-chart>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <app-account-goal [account]="account" [goalList]="goalList" #accountGoal></app-account-goal>
+  </div>
+</div>

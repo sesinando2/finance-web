@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">New Account</div>
+
+      <div class="card-body">
+        <app-account-form [account]="account"
+                          (onFormChange)="onFormChange($event)"
+                          (onStatusChange)="onFormStatusChange($event)"
+                          (onValueChange)="onFormValueChange($event)"
+        ></app-account-form>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn btn-primary mb-2 pull-right" [disabled]="!allowSave" (click)="save()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="card-header">
+  Transaction Allocation Details
+</div>
+
+<div class="card-body" #chartContainer>
+  <app-transaction-allocation-chart
+    [container]="chartContainer"
+    [allocations]="transaction.allocations"
+  ></app-transaction-allocation-chart>
+</div>
+
+<div class="card-footer">
+  <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,4 @@
+<app-base-input [label]="label" [helpText]="helpText" [errorMessage]="firstErrorText">
+  <input class="form-control" id="{{name}}"  placeholder="{{placeholder}}" attr.aria-describedby="{{name + 'HelpText'}}"
+         [formControl]="formControl" name="{{name}}" [ngClass]="{'is-valid': this.isValid, 'is-invalid': this.isInvalid}">
+</app-base-input>

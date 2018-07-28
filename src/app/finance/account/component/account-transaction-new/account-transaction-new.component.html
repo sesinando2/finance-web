@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card mb-2">
+      <div class="card-header">New Transaction</div>
+
+      <div class="card-body">
+        <app-transaction-form [transaction]="transaction"
+                              (onFormUpdated)="onFormUpdated($event)"
+        ></app-transaction-form>
+      </div>
+
+      <div class="card-footer">
+        <div class="row justify-content-between">
+          <button class="btn btn-secondary col-auto" [disabled]="!allowCancel" (click)="cancel()">Cancel</button>
+          <button class="btn btn-primary col-auto" [disabled]="!allowSave" (click)="save()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>Allocated Amount</div>
+        <button class="btn btn-sm btn-outline-secondary" (click)="newAllocation()">
+          <i class="fa fa-plus"></i> Allocate Amount
+        </button>
+      </div>
+
+      <div class="card-body" #chartContainer>
+        <app-transaction-allocation-chart #allocationChart
+                                          [container]="chartContainer"
+                                          [allocations]="transaction.allocations"
+                                          (allocationSelected)="onAllocationSelected($event)"
+        ></app-transaction-allocation-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>Allocate Budget</div>
+
+        <app-frequency-selector></app-frequency-selector>
+      </div>
+
+      <app-budget-list [budgetList]="filteredBudgetList" (onBudgetSelected)="onBudgetSelected($event)"></app-budget-list>
+    </div>
+  </div>
+</div>

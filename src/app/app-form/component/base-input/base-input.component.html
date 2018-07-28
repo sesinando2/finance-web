@@ -1,0 +1,8 @@
+<div class="form-group">
+  <label for="{{name}}">{{label}}</label>
+  <div class="input-group">
+    <ng-content></ng-content>
+  </div>
+  <small class="form-text text-danger" *ngIf="errorMessage">{{errorMessage}}</small>
+  <small id="{{name + 'HelpText'}}" class="form-text text-muted">{{helpText}}</small>
+</div>

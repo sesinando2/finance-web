@@ -1,0 +1,14 @@
+<div class="list-group list-group-flush" *ngIf="budgetList.length > 0; else emptyBudget">
+  <a class="list-group-item list-group-item-action" *ngFor="let budget of budgetList" (click)="selectBudget(budget, $event)">
+    <div class="d-flex justify-content-between">
+      <div>{{budget.name}}</div>
+      <small>{{budget.amount | currency:'$'}}</small>
+    </div>
+  </a>
+</div>
+
+<ng-template #emptyBudget>
+  <div class="card-body">
+    No budget available.
+  </div>
+</ng-template>

@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <app-account-links [account]="account"></app-account-links>
+
+        <app-frequency-selector></app-frequency-selector>
+      </div>
+
+      <div class="card-body" #chartContainer *ngIf="breakdownList.length > 0; else emptyBreakdown">
+        <app-breakdown-chart [breakdown]="totalBreakdown"
+                             [container]="chartContainer"
+        ></app-breakdown-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 mt-3" *ngIf="breakdownList.length > 0">
+    <div class="card">
+
+      <div class="card-header">
+        <h5>Detailed Breakdown</h5>
+      </div>
+
+      <div class="card-body" #cardBody>
+        <app-account-breakdown-chart
+          [container]="cardBody"
+          [breakdownList]="breakdownList"
+        ></app-account-breakdown-chart>
+      </div>
+
+      <div class="card-body" #chartContainer *ngFor="let breakdown of breakdownList">
+        <h5>{{breakdown.label}}</h5>
+
+        <app-breakdown-chart [breakdown]="breakdown"
+                             [container]="chartContainer"
+                             [height]="100"
+        ></app-breakdown-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyBreakdown>
+  <div class="card-body">
+    No account breakdown found.
+  </div>
+</ng-template>

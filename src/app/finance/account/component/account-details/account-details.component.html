@@ -1,0 +1,30 @@
+<div class="row">
+
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header"><app-account-links [account]="account"></app-account-links></div>
+
+      <div class="card-body">
+        <app-account-form [account]="account"
+                          (onFormChange)="onFormChange($event)"
+                          (onStatusChange)="onFormStatusChange($event)"
+                          (onValueChange)="onFormValueChange($event)"
+        ></app-account-form>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn btn-primary mb-2 pull-right" [disabled]="!allowSave" (click)="save()">
+          <i class="fa fa-save"></i> Save
+        </button>
+
+        <button class="btn btn-danger mb-2" [disabled]="!allowDelete" (click)="delete()">
+          <i class="fa fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+
+  </div>
+</div>

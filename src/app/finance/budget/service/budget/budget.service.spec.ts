@@ -1,0 +1,17 @@
+import {inject, TestBed} from '@angular/core/testing';
+
+import {BudgetService} from './budget.service';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+
+describe('BudgetService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [BudgetService]
+    });
+  });
+
+  it('should be created', inject([BudgetService], (service: BudgetService) => {
+    expect(service).toBeTruthy();
+  }));
+});

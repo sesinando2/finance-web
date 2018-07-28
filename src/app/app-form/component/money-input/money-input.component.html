@@ -1,0 +1,20 @@
+<app-base-input [label]="label" [helpText]="helpText" [errorMessage]="firstErrorText">
+
+  <div class="input-group-prepend">
+    <div class="input-group-text">$</div>
+  </div>
+
+  <input type="number" class="form-control" id="{{name}}" name="{{name}}"
+         placeholder="{{placeholder}}" attr.aria-describedby="{{name + 'HelpText'}}"
+         [formControl]="formControl" [readonly]="readonly"
+         [ngClass]="{'is-valid': this.isValid, 'is-invalid': this.isInvalid}">
+
+  <div class="input-group-append" *ngIf="creditDebitToggle">
+    <button class="btn" type="button"
+            (click)="toggleCreditDebit()"
+            [ngClass]="{'btn-danger': isDebit, 'btn-success': !isDebit}">
+
+      {{ isDebit ? 'Expense' : 'Income'}}
+    </button>
+  </div>
+</app-base-input>

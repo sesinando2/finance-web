@@ -1,0 +1,59 @@
+<div class="modal-header" *ngIf="title">{{title}}</div>
+
+<div class="modal-body">
+  <form class="needs-validation" novalidate [formGroup]="form">
+    <app-text-input name="name" label="Name" placeholder="Name to identify this goal"
+                    helpText="Please enter a unique name for your goal."
+                    [form]="form" [formState]="goal.name"
+                    [errorMap]="nameErrorMap" [validators]="required"
+                    [asyncValidator]="uniqueGoalNameValidator.bind(this)"
+    ></app-text-input>
+
+    <app-textarea-input name="description" label="Description"
+                        placeholder="A brief description that best describes this goal."
+                        helpText="Please enter a short description for your goal."
+                        [form]="form" [formState]="goal.description"
+    ></app-textarea-input>
+
+    <app-select-input name="frequency" label="Frequency"
+                      placeholder="Choose how frequent budget is allocated..."
+                      helpText="Please select how often this goal is allocated."
+                      [options]="frequencyOptions"
+                      [form]="form" [formState]="goal.frequency"
+                      [validators]="required" [errorMap]="frequencyErrorMap"
+    ></app-select-input>
+
+    <app-date-input name="targetDate" label="Target Date"
+                    helpText="Please specify the target date for the goal."
+                    [form]="form" [formState]="goal.targetDate"
+                    [validators]="required" [errorMap]="targetDateErrorMap"
+                    [minDate]="now"
+    ></app-date-input>
+
+    <app-money-input name="targetAmount" label="Target Amount"
+                     placeholder="0.00"
+                     helpText="Please enter the target amount for the goal."
+                     [form]="form" [formState]="goal.targetAmount"
+                     [errorMap]="targetAmountErrorMap" [validators]="[required, shouldBeGreaterThanZeroValidator]"
+    ></app-money-input>
+
+
+    <app-money-input name="amount" label="Calculated Budget"
+                     [formState]="goal.amount" [readonly]="true" *ngIf="!goal.completed"
+    ></app-money-input>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-secondary mr-auto" [disabled]="!allowCancel" (click)="cancel()">
+    Cancel
+  </button>
+
+  <button class="btn btn-danger" *ngIf="showDeleteButton" [disabled]="!allowDelete" (click)="delete()">
+    <i class="fa fa-trash"></i> Delete
+  </button>
+
+  <button class="btn btn-primary" [disabled]="!allowSave" (click)="save()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>

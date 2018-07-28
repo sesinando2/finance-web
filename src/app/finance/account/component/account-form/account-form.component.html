@@ -1,0 +1,13 @@
+<form class="needs-validation" novalidate [formGroup]="form">
+  <app-text-input name="name" label="Account Name" placeholder="Name of your account"
+                  helpText="Please enter a unique name for your account."
+                  [form]="form" [errorMap]="errorMap" [formState]="account.name"
+                  [validators]="required" [asyncValidator]="uniqueNameValidator"
+  ></app-text-input>
+
+  <app-textarea-input name="description" label="Account Description"
+                      placeholder="A brief description of your account."
+                      helpText="Please enter a short description of your account."
+                      [form]="form" [formState]="account.description"
+  ></app-textarea-input>
+</form>

@@ -1,0 +1,17 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link" role="tab" [routerLink]="['/account', account.id, 'breakdown', currentFrequency]" routerLinkActive="active">Breakdown</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" role="tab" [routerLink]="['/account', account.id, 'budget', currentFrequency]" routerLinkActive="active">Budget</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" role="tab" [routerLink]="['/account', account.id, 'transaction']" routerLinkActive="active">Transactions</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" role="tab" [routerLink]="['/account', account.id, 'details']" routerLinkActive="active">Details</a>
+  </li>
+</ul>

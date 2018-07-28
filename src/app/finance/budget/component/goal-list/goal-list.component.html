@@ -1,0 +1,18 @@
+<div class="list-group list-group-flush" *ngIf="goalList.length > 0; else emptyGoal">
+  <a class="list-group-item list-group-item-action" *ngFor="let goal of goalList"
+     [ngClass]="{'list-group-item-danger': goal.expired, 'list-group-item-success': goal.completed}" (click)="selectGoal(goal, $event)">
+    <div class="d-flex justify-content-between">
+      <div>{{goal.name}}</div>
+      <small>{{goal.balance | currency:'$'}}</small>
+    </div>
+    <div class="mt-2">
+      <ngb-progressbar [type]="getType(goal)" [value]="goal.balance" [max]="goal.targetAmount" [showValue]="true"></ngb-progressbar>
+    </div>
+  </a>
+</div>
+
+<ng-template #emptyGoal>
+  <div class="card-body">
+    No goal available.
+  </div>
+</ng-template>

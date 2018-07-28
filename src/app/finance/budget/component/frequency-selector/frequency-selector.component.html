@@ -1,0 +1,10 @@
+<div ngbDropdown class="d-inline-block" id="frequency-selector" placement="bottom-right">
+  <button class="btn btn-primary text-capitalize" ngbDropdownToggle>{{currentFrequency}}</button>
+
+  <div ngbDropdownMenu>
+    <a class="dropdown-item" [routerLink]="getRouterLink('daily')" routerLinkActive="active">Daily</a>
+    <a class="dropdown-item" [routerLink]="getRouterLink('weekly')" routerLinkActive="active">Weekly</a>
+    <a class="dropdown-item" [routerLink]="getRouterLink('monthly')" routerLinkActive="active">Monthly</a>
+    <a class="dropdown-item" [routerLink]="getRouterLink('annually')" routerLinkActive="active">Annually</a>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="modal-header">{{isNew ? 'New Allocation' : 'Update Allocation'}}</div>
+
+<div class="modal-body">
+  <form class="needs-validation" novalidate [formGroup]="form">
+    <app-text-input name="name" label="Name" placeholder="Name of this allocation"
+                    helpText="Please enter a unique name for this allocation."
+                    [form]="form" [formState]="allocation.name" [errorMap]="nameErrorMap"
+                    [validators]="required" [asyncValidator]="uniqueAllocationName"
+    ></app-text-input>
+
+    <app-textarea-input name="description" label="Description"
+                        placeholder="A brief description for this allocation."
+                        helpText="Please enter a short description of this allocation."
+                        [form]="form" [formState]="allocation.description"
+    ></app-textarea-input>
+
+    <app-money-input name="amount" label="Amount"
+                     placeholder="100.00"
+                     helpText="Please enter the amount you want to allocate."
+                     [form]="form" [formState]="allocation.amount" [errorMap]="amountErrorMap"
+                     [validators]="required"
+                     [creditDebitToggle]="true"
+    ></app-money-input>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-secondary mr-auto" [disabled]="!allowCancel" (click)="cancel()">
+    Cancel
+  </button>
+
+  <button class="btn btn-danger" *ngIf="showDeleteButton" [disabled]="!allowDelete" (click)="delete()">
+    <i class="fa fa-trash"></i> Delete
+  </button>
+
+  <button class="btn btn-primary" [disabled]="!allowSave" (click)="save()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>

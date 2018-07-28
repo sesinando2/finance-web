@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    Account List
+  </div>
+
+  <ul class="list-group list-group-flush" *ngIf="accountList.length > 0; else emptyAccount">
+    <a class="list-group-item list-group-item-action"
+       *ngFor="let account of accountList"
+       [routerLink]="getRoute(account.id)"
+       routerLinkActive="active">
+
+      <div class="d-flex justify-content-between">
+        <div>{{account.name}}</div>
+        <small>{{account.balance | currency:'$'}}</small>
+      </div>
+    </a>
+  </ul>
+
+  <ng-template #emptyAccount>
+    <div class="card-body">
+      No account found.
+    </div>
+  </ng-template>
+</div>
