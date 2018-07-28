@@ -3,6 +3,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {RoutingService} from "../../../../service/routing/routing.service";
 import {Subscription} from "rxjs/Subscription";
 import {filter} from "rxjs/operators";
+import {Frequency} from "../../../model/frequency.enum";
 
 @Component({
   selector: 'app-frequency-selector',
@@ -11,9 +12,14 @@ import {filter} from "rxjs/operators";
 })
 export class FrequencySelectorComponent implements OnInit, OnDestroy {
 
-  private static readonly knownFrequencies  = ['daily', 'weekly', 'monthly', 'annually'];
+  private static readonly knownFrequencies = Object
+    .keys(Frequency).map((frequency) => frequency.toLowerCase());
 
   currentFrequency: string;
+
+  readonly frequencyOptions = Object.keys(Frequency).map((frequency) => {
+    return { label: Frequency[frequency], link: frequency.toLowerCase() };
+  });
 
   private subscription: Subscription;
 

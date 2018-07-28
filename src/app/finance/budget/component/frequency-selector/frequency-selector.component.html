@@ -2,9 +2,7 @@
   <button class="btn btn-primary text-capitalize" ngbDropdownToggle>{{currentFrequency}}</button>
 
   <div ngbDropdownMenu>
-    <a class="dropdown-item" [routerLink]="getRouterLink('daily')" routerLinkActive="active">Daily</a>
-    <a class="dropdown-item" [routerLink]="getRouterLink('weekly')" routerLinkActive="active">Weekly</a>
-    <a class="dropdown-item" [routerLink]="getRouterLink('monthly')" routerLinkActive="active">Monthly</a>
-    <a class="dropdown-item" [routerLink]="getRouterLink('annually')" routerLinkActive="active">Annually</a>
+    <a class="dropdown-item" *ngFor="let frequency of frequencyOptions"
+       [routerLink]="getRouterLink(frequency.link)" routerLinkActive="active">{{frequency.label}}</a>
   </div>
 </div>
