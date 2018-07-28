@@ -1,7 +1,7 @@
 version: "3"
 services:
   auth:
-    image: hub.docker.com/sesinando2/auth:0.0.1-SNAPSHOT
+    image: sesinando2/auth:0.0.1-SNAPSHOT
     deploy:
       restart_policy:
         condition: on-failure
@@ -13,7 +13,7 @@ services:
       - default
 
   finance:
-      image: hub.docker.com/sesinando2/finance:0.0.1-SNAPSHOT
+      image: sesinando2/finance:0.0.1-SNAPSHOT
       depends_on:
         - auth
       deploy:
@@ -30,7 +30,7 @@ services:
         - default
 
   finanace-web:
-    image: hub.docker.com/sesinando2/finance-web:0.0.1
+    image: sesinando2/finance-web:0.0.1
     depends_on:
       - finance
     deploy:
