@@ -1,7 +1,7 @@
 import {LoginPage} from "./login.po";
-import {BaseExternalPage} from "./base-external.po";
+import {BaseExternalPage} from "../base-external.po";
 import {by, element, ElementFinder} from "protractor";
-import {environment} from "../../src/environments/environment.test";
+import {environment} from "../../../src/environments/environment.test";
 
 export class AuthorizePage extends BaseExternalPage {
 

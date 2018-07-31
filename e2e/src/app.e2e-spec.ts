@@ -1,16 +1,20 @@
-import {AppPage} from './app.po';
 import {browser} from "protractor";
-import {LoginPage} from "./login.po";
-import {AuthorizePage} from "./authorize.po";
+import {AppPage} from "./page/app.po";
+import {HomePage} from "./page/home.po";
+import {LoginPage} from "./page/login.po";
+import {AuthorizePage} from "./page/authorize.po";
 
 describe('finance-web App', () => {
 
   let appPage: AppPage;
+  let homePage: HomePage;
+
   let loginPage: LoginPage;
   let authorizePage: AuthorizePage;
 
   beforeEach(() => {
     appPage = new AppPage();
+    homePage = new HomePage();
     loginPage = new LoginPage();
     authorizePage = new AuthorizePage();
   });
@@ -18,6 +22,8 @@ describe('finance-web App', () => {
   it('should navigate to login appPage', () => {
     browser.waitForAngularEnabled(false);
     appPage.navigateTo();
+    homePage.isCurrent();
+    homePage.signInButton.click();
     loginPage.isCurrent();
   });
 
@@ -25,8 +31,6 @@ describe('finance-web App', () => {
     loginPage.username = 'admin';
     loginPage.password = 'Urub42q9bCyFBP7B';
     loginPage.loginButton.click();
-    authorizePage.isCurrent();
-    authorizePage.authorizeButton.click();
     browser.waitForAngularEnabled(false);
     appPage.isCurrent();
   });

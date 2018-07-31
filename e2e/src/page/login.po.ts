@@ -1,6 +1,6 @@
 import {browser, by, element, ElementFinder} from "protractor";
 import {BasePage} from "./base.po";
-import {environment} from "../../src/environments/environment.test";
+import {environment} from "../../../src/environments/environment.test";
 
 export class LoginPage extends BasePage {
 
