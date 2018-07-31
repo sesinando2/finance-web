@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
         - name: finance-web
-          image: gcr.io/alert-synapse-211723/finance-web:0.0.7
+          image: gcr.io/alert-synapse-211723/finance-web-local:0.0.1
           ports:
             - containerPort: 80
