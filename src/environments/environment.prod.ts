@@ -4,5 +4,5 @@ export const environment = {
   clientId: 'finance',
   clientSecret: 'Urub42q9bCyFBP7B',
 
-  financeServer: 'http://127.0.0.1:10080'
+  financeServer: 'http://127.0.0.1:10081'
 };
