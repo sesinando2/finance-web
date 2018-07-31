@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: finance-web
+  labels:
+    app: finance-web
+spec:
+  template:
+    metadata:
+      labels:
+        app: finance-web
+    spec:
+      containers:
+        - name: finance-web
+          image: gcr.io/alert-synapse-211723/finance-web:0.0.1
+          ports:
+            - containerPort: 4200

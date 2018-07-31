@@ -12,11 +12,13 @@ import {BudgetModule} from "./finance/budget/budget.module";
 import {AppComponent} from './app.component';
 
 import {RoutingService} from "./service/routing/routing.service";
+import {HomeComponent} from './component/home/home.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

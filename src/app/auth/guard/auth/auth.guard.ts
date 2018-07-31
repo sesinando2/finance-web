@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
       return this.retrieveTokenFrom(authorizationCode);
     } else {
       localStorage.setItem('url', state.url);
-      this.authService.authorizeUser();
+      this.router.navigate(['/home']);
       return false;
     }
   }

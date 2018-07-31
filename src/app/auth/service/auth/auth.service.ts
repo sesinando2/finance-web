@@ -25,7 +25,7 @@ export class AuthService {
     return localStorage.getItem('refresh_token');
   }
 
-  authorizeUser(): void {
+  get authorizationUrl(): string {
     let authorizationPath = `${environment.authenticationServer}/oauth/authorize`;
 
     let authParam = new URLSearchParams();
@@ -33,7 +33,16 @@ export class AuthService {
     authParam.set('client_id', environment.clientId);
 
     authorizationPath += `?${authParam}`;
-    window.location.href = authorizationPath;
+    return authorizationPath;
+  }
+
+  authorizeUser(): void {
+    window.location.href = this.authorizationUrl
+  }
+
+  logout(): void {
+    localStorage.clear();
+    localStorage.setItem('url', '/');
   }
 
   getAndStoreToken(authorizationCode: string): Observable<Object> {
