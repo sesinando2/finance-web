@@ -12,7 +12,7 @@ services:
     networks:
       - default
 
-  finance:
+  finance_api:
       image: finance
       depends_on:
         - auth
@@ -29,10 +29,11 @@ services:
       networks:
         - default
 
-  finanace-web:
+  finance_web:
     image: finance-web
     depends_on:
       - finance
+      - auth
     deploy:
       restart_policy:
         condition: on-failure
