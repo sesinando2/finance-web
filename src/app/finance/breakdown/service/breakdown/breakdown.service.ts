@@ -17,17 +17,9 @@ export class BreakdownService {
       .pipe(combineAll(), map((response) => this.createBreakdownFrom(response[0])), toArray())
   }
 
-  getTotalAccountBreakdown(account: Account, breakdownList: Breakdown[] = []) {
-    let accountBreakdown = breakdownList.reduce((totalBreakdown: Breakdown, breakdown: Breakdown) => {
-      totalBreakdown.balance = totalBreakdown.balance + breakdown.balance;
-      totalBreakdown.totalCredit += breakdown.totalCredit;
-      totalBreakdown.totalDebit += breakdown.totalDebit;
-      totalBreakdown.allocatedAmount += breakdown.allocatedAmount;
-      return totalBreakdown;
-    }, new Breakdown());
-
-    accountBreakdown.label = account.name;
-    return accountBreakdown;
+  getTotalAccountBreakdown(accountId: any, frequency: any = 'monthly'): Observable<Breakdown> {
+    return this.http.get(this.getAccountTotalBreakdownUrl(accountId, frequency))
+      .pipe(map(this.createBreakdownFrom.bind(this)));
   }
 
   getAllAccountBreakdown(frequency: any = 'monthly'): Observable<Breakdown[]> {
@@ -37,6 +29,10 @@ export class BreakdownService {
 
   private createBreakdownFrom(object: Object): Breakdown {
     return Object.assign(new Breakdown(), object);
+  }
+
+  private getAccountTotalBreakdownUrl(accountId: any, frequency: any) {
+    return `${this.accountUrl}/${accountId}/total-${frequency}-breakdown`;
   }
 
   private getAccountBreakdownUrl(accountId: any, frequency: any) {

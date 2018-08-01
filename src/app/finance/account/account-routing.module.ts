@@ -14,6 +14,7 @@ import {AccountTransactionNewComponent} from "./component/account-transaction-ne
 import {AccountBreakdownComponent} from "./component/account-breakdown/account-breakdown.component";
 import {AccountBreakdownResolve} from "./resolve/account-breakdown.resolve";
 import {AccountGoalListResolve} from "./resolve/account-goal-list.resolve";
+import {AccountTotalBreakdownResolve} from "./resolve/account-total-breakdown.resolve";
 
 const routes: Routes = [
   { path: '', component: AccountComponent,
@@ -30,7 +31,10 @@ const routes: Routes = [
 
           { path: 'breakdown', redirectTo: 'breakdown/monthly', pathMatch: 'full' },
           { path: 'breakdown/:frequency', component: AccountBreakdownComponent,
-            resolve: { breakdownList: AccountBreakdownResolve }
+            resolve: {
+              breakdownList: AccountBreakdownResolve,
+              totalBreakdown: AccountTotalBreakdownResolve
+            }
           },
 
           { path: 'budget', redirectTo: 'budget/monthly', pathMatch: 'full' },

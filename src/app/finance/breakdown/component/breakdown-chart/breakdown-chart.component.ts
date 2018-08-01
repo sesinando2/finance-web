@@ -25,19 +25,19 @@ export class BreakdownChartComponent extends AbstractChartComponent implements O
     this.data = [];
 
     if (this.breakdown) {
+      this.addToData('balance', 'Balance');
       this.addToData('totalDebit', 'Expense');
       this.addToData('totalCredit', 'Income');
-      this.addToData('balance', 'Balance');
       this.addToData('allocatedAmount', 'Allocated');
+      this.addToData('expenseRate', 'Expense Rate');
+      this.addToData('incomeRate', 'Income Rate');
     }
   }
 
   private addToData(property: string, label: string) {
-    if (this.breakdown[property]) {
-      this.data.push({
-        name: label,
-        value: this.breakdown[property]
-      })
-    }
+    this.data.push({
+      name: label,
+      value: this.breakdown[property]
+    })
   }
 }

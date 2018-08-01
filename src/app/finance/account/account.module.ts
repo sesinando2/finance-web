@@ -29,6 +29,7 @@ import {AccountBreakdownComponent} from './component/account-breakdown/account-b
 import {BreakdownModule} from "../breakdown/breakdown.module";
 import {AccountBreakdownResolve} from "./resolve/account-breakdown.resolve";
 import { AccountGoalComponent } from './component/account-goal/account-goal.component';
+import {AccountTotalBreakdownResolve} from "./resolve/account-total-breakdown.resolve";
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ import { AccountGoalComponent } from './component/account-goal/account-goal.comp
     AccountBudgetListResolve,
     AccountTransactionListResolve,
     AccountBreakdownResolve,
+    AccountTotalBreakdownResolve,
     AccountService,
     AccountBreadcrumbService
   ]

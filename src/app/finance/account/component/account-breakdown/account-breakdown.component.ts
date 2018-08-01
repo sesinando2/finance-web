@@ -21,8 +21,7 @@ export class AccountBreakdownComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private cd: ChangeDetectorRef,
-              private breakdownService: BreakdownService) { }
+              private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.subscription = this.subscribeToData();
@@ -37,7 +36,7 @@ export class AccountBreakdownComponent implements OnInit, OnDestroy {
     return this.route.data.subscribe((data: Data) => {
       this.account = data['account'];
       this.breakdownList = data['breakdownList'];
-      this.totalBreakdown = this.breakdownService.getTotalAccountBreakdown(this.account, this.breakdownList);
+      this.totalBreakdown = data['totalBreakdown'];
       this.cd.detectChanges();
     });
   }

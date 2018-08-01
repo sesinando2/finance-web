@@ -12,4 +12,7 @@ export class Breakdown {
   totalCredit: number = 0;
   totalDebit: number = 0;
   allocatedAmount: number = 0;
+
+  expenseRate: number = 0;
+  incomeRate: number = 0;
 }
