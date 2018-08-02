@@ -27,20 +27,29 @@ export class BreakdownService {
       .pipe(combineAll(), map((response) => this.createBreakdownFrom(response[0])), toArray())
   }
 
+  getAllAccountTotalBreakdown(frequency: any = 'monthly'): Observable<Breakdown> {
+    return this.http.get(this.getAllAccountTotalBreakdownUrl(frequency))
+      .pipe(map(this.createBreakdownFrom.bind(this)));
+  }
+
   private createBreakdownFrom(object: Object): Breakdown {
     return Object.assign(new Breakdown(), object);
   }
 
-  private getAccountTotalBreakdownUrl(accountId: any, frequency: any) {
+  private getAccountTotalBreakdownUrl(accountId: any, frequency: any): string {
     return `${this.accountUrl}/${accountId}/total-${frequency}-breakdown`;
   }
 
-  private getAccountBreakdownUrl(accountId: any, frequency: any) {
+  private getAccountBreakdownUrl(accountId: any, frequency: any): string {
     return `${this.accountUrl}/${accountId}/${frequency}-breakdown`;
   }
 
-  private getAllAccountBreakdownUrl(frequency: any) {
+  private getAllAccountBreakdownUrl(frequency: any): string {
     return `${environment.financeServer}/${frequency}-breakdown`;
+  }
+
+  private getAllAccountTotalBreakdownUrl(frequency: any): string {
+    return `${environment.financeServer}/total-${frequency}-breakdown`;
   }
 
   private get accountUrl(): string {

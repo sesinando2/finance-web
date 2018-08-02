@@ -8,6 +8,7 @@ import {BaseComponent} from "./component/base/base.component";
 import {DashboardComponent} from "./component/dashboard/dashboard.component";
 import {AccountModule} from "./account/account.module";
 import {AccountListResolve} from "./account/resolve/account-list.resolve";
+import {AllAccountTotalBreakdownResolve} from "./resolve/all-account-total-breakdown.resolve";
 
 const routes: Routes = [
   { path: '', component: BaseComponent, canActivate: [AuthGuard],
@@ -17,7 +18,8 @@ const routes: Routes = [
       { path: 'dashboard/:frequency', component: DashboardComponent,
         resolve: {
           accountList: AccountListResolve,
-          breakdownList: AllAccountBreakdownResolve
+          breakdownList: AllAccountBreakdownResolve,
+          totalBreakdown: AllAccountTotalBreakdownResolve
         }
       },
       { path: 'account', loadChildren: () => AccountModule }

@@ -28,15 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private updateData(data: Data): void {
     this.accountList = data['accountList'];
     this.breakdownList = data['breakdownList'];
-    this.totalBreakdown = this.breakdownList  .reduce(this.calculateTotalBreakdown.bind(this), new Breakdown());
+    this.totalBreakdown = data['totalBreakdown'];
     this.cd.detectChanges();
-  }
-
-  private calculateTotalBreakdown(accumulator: Breakdown, breakdown: Breakdown): Breakdown {
-    accumulator.balance += breakdown.balance;
-    accumulator.totalCredit += breakdown.totalCredit;
-    accumulator.totalDebit += breakdown.totalDebit;
-    accumulator.allocatedAmount += breakdown.allocatedAmount;
-    return accumulator;
   }
 }
