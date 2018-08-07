@@ -15,10 +15,10 @@
   </div>
 
   <div class="col-md-12" #budgetContainer>
-    <app-breakdown-chart
+    <app-stacked-breakdown-chart
       [container]="budgetContainer"
-      [breakdown]="totalBreakdown"
-    ></app-breakdown-chart>
+      [breakdownList]="breakdownList"
+    ></app-stacked-breakdown-chart>
   </div>
 
   <div class="col-md-12 mt-5" #breakdownContainer>

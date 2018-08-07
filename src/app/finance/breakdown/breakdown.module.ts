@@ -5,6 +5,7 @@ import {AccountBreakdownChartComponent} from "./component/account-breakdown-char
 import {BreakdownService} from './service/breakdown/breakdown.service';
 import {BreakdownChartComponent} from './component/breakdown-chart/breakdown-chart.component';
 import { BreakdownTrendsChartComponent } from './component/breakdown-trends-chart/breakdown-trends-chart.component';
+import { StackedBreakdownChartComponent } from './component/stacked-breakdown-chart/stacked-breakdown-chart.component';
 
 @NgModule({
   imports: [
@@ -15,13 +16,15 @@ import { BreakdownTrendsChartComponent } from './component/breakdown-trends-char
   exports: [
     AccountBreakdownChartComponent,
     BreakdownChartComponent,
-    BreakdownTrendsChartComponent
+    BreakdownTrendsChartComponent,
+    StackedBreakdownChartComponent
   ],
 
   declarations: [
     AccountBreakdownChartComponent,
     BreakdownChartComponent,
-    BreakdownTrendsChartComponent
+    BreakdownTrendsChartComponent,
+    StackedBreakdownChartComponent
   ],
 
   providers: [

@@ -8,9 +8,10 @@
       </div>
 
       <div class="card-body" #chartContainer *ngIf="breakdownList.length > 0; else emptyBreakdown">
-        <app-breakdown-chart [breakdown]="totalBreakdown"
-                             [container]="chartContainer"
-        ></app-breakdown-chart>
+        <app-stacked-breakdown-chart
+          [container]="chartContainer"
+          [breakdownList]="breakdownList"
+        ></app-stacked-breakdown-chart>
       </div>
     </div>
   </div>
