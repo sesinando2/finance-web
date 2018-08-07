@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Breakdown} from "../../../model/breakdown.model";
 import {AbstractChartComponent} from "../../../component/shared/abstract-chart.component";
 
@@ -44,27 +44,27 @@ export class BreakdownTrendsChartComponent extends AbstractChartComponent implem
 
     breakdownList.forEach((breakdown: Breakdown) => {
       balance.push({
-        name: breakdown.label,
+        name: new Date(parseInt(<string>breakdown.label)),
         value: breakdown.balance
       });
 
       expense.push({
-        name: breakdown.label,
+        name: new Date(parseInt(<string>breakdown.label)),
         value: breakdown.totalDebit
       });
 
       income.push({
-        name: breakdown.label,
+        name: new Date(parseInt(<string>breakdown.label)),
         value: breakdown.totalCredit
       });
 
       expenseRate.push({
-        name: breakdown.label,
+        name: new Date(parseInt(<string>breakdown.label)),
         value: breakdown.expenseRate
       });
 
       incomeRate.push({
-        name: breakdown.label,
+        name: new Date(parseInt(<string>breakdown.label)),
         value: breakdown.incomeRate
       })
     });
