@@ -15,6 +15,7 @@ import {AllAccountChartComponent} from "./component/all-account-chart/all-accoun
 
 import {AllAccountBreakdownResolve} from "./resolve/all-account-breakdown.resolve";
 import {AllAccountTotalBreakdownResolve} from "./resolve/all-account-total-breakdown.resolve";
+import {AllAccountTrendsResolve} from "./resolve/all-account-trends.resolve";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {AllAccountTotalBreakdownResolve} from "./resolve/all-account-total-break
 
   providers: [
     AllAccountBreakdownResolve,
-    AllAccountTotalBreakdownResolve
+    AllAccountTotalBreakdownResolve,
+    AllAccountTrendsResolve
   ]
 })
 export class FinanceModule { }

@@ -29,4 +29,12 @@
       [height]="0"
     ></app-account-breakdown-chart>
   </div>
+
+  <div class="col-md-12 mt-5" #accountTrendsContainer>
+    <h3>Trend</h3>
+    <app-breakdown-trends-chart
+      [container]="accountTrendsContainer"
+      [breakdownList]="accountTrends"
+    ></app-breakdown-trends-chart>
+  </div>
 </div>
