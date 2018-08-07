@@ -14,6 +14,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {AllAccountChartComponent} from "../all-account-chart/all-account-chart.component";
 import {AccountBreakdownChartComponent} from "../../breakdown/component/account-breakdown-chart/account-breakdown-chart.component";
+import {BreakdownTrendsChartComponent} from "../../breakdown/component/breakdown-trends-chart/breakdown-trends-chart.component";
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -38,7 +39,8 @@ describe('DashboardComponent', () => {
 
         AllAccountChartComponent,
         AccountBreakdownChartComponent,
-        BreakdownChartComponent
+        BreakdownChartComponent,
+        BreakdownTrendsChartComponent
       ],
 
       providers: [RoutingService]
@@ -50,7 +52,8 @@ describe('DashboardComponent', () => {
     spyOnProperty(activatedRoute, 'parent', 'get').and.returnValue(activatedRoute);
     activatedRoute.data = Observable.of({
       accountList: [],
-      breakdownList: []
+      breakdownList: [],
+      accountTrends: []
     })
   }));
 

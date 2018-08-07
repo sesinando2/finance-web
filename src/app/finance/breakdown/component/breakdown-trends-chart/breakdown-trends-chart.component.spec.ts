@@ -1,5 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 import {BreakdownTrendsChartComponent} from './breakdown-trends-chart.component';
 
 describe('BreakdownTrendsChartComponent', () => {
@@ -8,7 +11,14 @@ describe('BreakdownTrendsChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BreakdownTrendsChartComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        NgxChartsModule
+      ],
+
+      declarations: [
+        BreakdownTrendsChartComponent
+      ]
     })
     .compileComponents();
   }));
