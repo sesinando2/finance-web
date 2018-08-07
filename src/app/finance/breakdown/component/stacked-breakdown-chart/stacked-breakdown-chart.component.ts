@@ -10,6 +10,14 @@ import {Breakdown} from "../../../model/breakdown.model";
 export class StackedBreakdownChartComponent extends AbstractChartComponent implements OnChanges {
 
   @Input() breakdownList: Breakdown[] = [];
+  @Input() propertiesLabel: { [key: string]: string } = {
+    balance: 'Balance',
+    totalDebit: 'Expense',
+    totalCredit: 'Income',
+    allocatedAmount: 'Allocated',
+    expenseRate: 'Expense Rate',
+    incomeRate: 'Income Rate'
+  };
 
   chartData: {
     name: string,
@@ -34,63 +42,45 @@ export class StackedBreakdownChartComponent extends AbstractChartComponent imple
       value: any
     }[]
   }[] {
-    let balance = [];
-    let expense = [];
-    let income = [];
-    let allocated = [];
-    let expenseRate = [];
-    let incomeRate = [];
+    let series = this.createSeriesFrom(this.propertiesLabel, breakdownList);
+    let data = [];
+
+    for (let property in series) {
+      data.push({
+        name: this.propertiesLabel[property],
+        series: series[property]
+      });
+    }
+
+    return data;
+  }
+
+  private createSeriesFrom(propertiesLabel: { [key: string]: string }, breakdownList: Breakdown[]): {
+    [key: string]: {
+      name: string,
+      value: any
+    }[]
+  } {
+    let series: {
+      [key: string]: {
+        name: string,
+        value: any
+      }[]
+    } = {};
+
+    for (let property in propertiesLabel) {
+      series[property] = [];
+    }
 
     breakdownList.forEach((breakdown: Breakdown) => {
-      balance.push({
-        name: breakdown.label,
-        value: breakdown.balance
-      });
-
-      expense.push({
-        name: breakdown.label,
-        value: breakdown.totalDebit
-      });
-
-      income.push({
-        name: breakdown.label,
-        value: breakdown.totalCredit
-      });
-
-      allocated.push({
-        name: breakdown.label,
-        value: breakdown.allocatedAmount
-      });
-
-      expenseRate.push({
-        name: breakdown.label,
-        value: breakdown.expenseRate
-      });
-
-      incomeRate.push({
-        name: breakdown.label,
-        value: breakdown.incomeRate
-      });
+      for (let property in this.propertiesLabel) {
+        series[property].push({
+          name: <string>breakdown.label,
+          value: breakdown[property]
+        });
+      }
     });
 
-    return [{
-      name: 'Balance',
-      series: balance,
-    }, {
-      name: 'Expense',
-      series: expense,
-    }, {
-      name: 'Income',
-      series: income,
-    }, {
-      name: 'Allocated',
-      series: allocated,
-    }, {
-      name: 'Expense Rate',
-      series: expenseRate,
-    }, {
-      name: 'Income Rate',
-      series: incomeRate,
-    }]
+    return series
   }
 }

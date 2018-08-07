@@ -10,6 +10,14 @@ import {AbstractChartComponent} from "../../../component/shared/abstract-chart.c
 export class BreakdownChartComponent extends AbstractChartComponent implements OnChanges {
 
   @Input() breakdown: Breakdown;
+  @Input() propertiesLabel: {} = {
+    balance: 'Balance',
+    totalDebit: 'Expense',
+    totalCredit: 'Income',
+    allocatedAmount: 'Allocated',
+    expenseRate: 'Expense Rate',
+    incomeRate: 'Income Rate'
+  };
 
   data: any[] = [];
 
@@ -25,12 +33,9 @@ export class BreakdownChartComponent extends AbstractChartComponent implements O
     this.data = [];
 
     if (this.breakdown) {
-      this.addToData('balance', 'Balance');
-      this.addToData('totalDebit', 'Expense');
-      this.addToData('totalCredit', 'Income');
-      this.addToData('allocatedAmount', 'Allocated');
-      this.addToData('expenseRate', 'Expense Rate');
-      this.addToData('incomeRate', 'Income Rate');
+      for (let property in this.propertiesLabel) {
+        this.addToData(property, this.propertiesLabel[property]);
+      }
     }
   }
 
