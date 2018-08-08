@@ -15,21 +15,29 @@
   </div>
 
   <div class="col-md-12" #budgetContainer>
-    <app-stacked-breakdown-chart
+    <app-breakdown-chart
       [container]="budgetContainer"
-      [breakdownList]="breakdownList"
-    ></app-stacked-breakdown-chart>
+      [breakdown]="totalBreakdown"
+    ></app-breakdown-chart>
   </div>
 
   <div class="col-md-12 mt-5" #breakdownContainer>
     <h3>Breakdown</h3>
+
     <app-account-breakdown-chart
       [container]="breakdownContainer"
       [breakdownList]="breakdownList"
-      [height]="0"
+      [height]="300"
       label="Balance"
       property="balance"
     ></app-account-breakdown-chart>
+
+    <app-stacked-breakdown-chart
+      [container]="budgetContainer"
+      [breakdownList]="breakdownList"
+      [propertiesLabel]="{totalDebit: 'Expense', totalCredit: 'Income'}"
+      [height]="100"
+    ></app-stacked-breakdown-chart>
   </div>
 
   <div class="col-md-12 mt-5" #accountTrendsContainer>

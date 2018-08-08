@@ -12,8 +12,9 @@ import {NgbAccordion} from "@ng-bootstrap/ng-bootstrap";
 export class AccountBreakdownChartComponent extends AbstractChartComponent implements OnInit, OnChanges {
 
   @Input() breakdownList: Breakdown[] = [];
-  @Input() label = 'Total';
-  @Input() property = 'balance';
+  @Input() label: string = 'Total';
+  @Input() property: string = 'balance';
+  @Input() showAll: boolean = false;
 
   @ViewChild('acc') acc: NgbAccordion;
 
@@ -47,7 +48,8 @@ export class AccountBreakdownChartComponent extends AbstractChartComponent imple
 
   private deriveChartData(breakdownList: Breakdown[]): void {
     this.basicChartData = breakdownList
-      .filter((breakdown: Breakdown) => breakdown.balance > 0)
+      .filter((breakdown: Breakdown) => this.showAll || breakdown[this.property] != 0)
+      .sort((a: Breakdown, b: Breakdown) => b[this.property] - a[this.property])
       .map(this.convertToBasicChartData.bind(this));
 
   }

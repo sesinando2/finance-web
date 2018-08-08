@@ -43,6 +43,7 @@ export class AuthService {
   logout(): void {
     localStorage.clear();
     localStorage.setItem('url', '/');
+    window.location.href = `${environment.authenticationServer}/logout`;
   }
 
   getAndStoreToken(authorizationCode: string): Observable<Object> {
