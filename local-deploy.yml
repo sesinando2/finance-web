@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: finance
-  name: finance
+    app: finance-web
+  name: finance-web
   namespace: default
 spec:
   ports:
@@ -11,35 +11,24 @@ spec:
       protocol: TCP
       targetPort: 80
       name: web
-    - port: 10081
-      protocol: TCP
-      targetPort: 10081
-      name: api
   selector:
-    app: finance
+    app: finance-web
   type: LoadBalancer
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: finance
+  name: finance-web
   labels:
-    app: finance
+    app: finance-web
 spec:
   template:
     metadata:
       labels:
-        app: finance
+        app: finance-web
     spec:
       containers:
-        - name: web
+        - name: finance-web
           image: gcr.io/alert-synapse-211723/finance-web-local:0.0.1
           ports:
             - containerPort: 80
-        - name: api
-          image: gcr.io/alert-synapse-211723/finance:0.0.2
-          ports:
-            - containerPort: 10081
-          env:
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://host.docker.internal:3306/finance
