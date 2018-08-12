@@ -4,12 +4,14 @@ import {LogoutGuard} from './logout.guard';
 
 import {AuthService} from "../../service/auth/auth.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('LogoutGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule,
       ],
 
       providers: [

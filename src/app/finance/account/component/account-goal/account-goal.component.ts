@@ -31,13 +31,13 @@ export class AccountGoalComponent implements OnInit, OnDestroy {
 
   newGoal(): void {
     this.goalModalService.open(this.account)
-      .then((goal: Goal) => this.goalService.createGoal(this.account.id, goal).toPromise())
+      .then((goal: Goal) => this.goalService.createGoal(this.account, goal).toPromise())
       .catch(() => { /* Ignore */ });
   }
 
   selectGoal(goal: Goal) {
     this.goalModalService.open(this.account, goal, 'Edit Goal')
-      .then((goal: Goal) => this.goalService.update(goal).toPromise())
+      .then((goal: Goal) => this.goalService.update(this.account, goal).toPromise())
       .catch(() => { /* Ignore */ });
   }
 }

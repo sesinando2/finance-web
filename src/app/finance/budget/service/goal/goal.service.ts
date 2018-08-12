@@ -6,6 +6,8 @@ import {environment} from "../../../../../environments/environment";
 
 import {Subject} from "rxjs/Subject";
 import {map, concatMap} from "rxjs/operators";
+import {Account} from "../../../model/account.model";
+import {BudgetService} from "../budget/budget.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +15,12 @@ import {map, concatMap} from "rxjs/operators";
 export class GoalService {
 
   private goalUpdatedSource = new Subject<Goal>();
-  readonly goalUpdated$ = this.goalUpdatedSource.asObservable();
+  private goalListUpdatedSource = new Subject<Goal[]>();
 
-  constructor(private http: HttpClient) { }
+  readonly goalUpdated$ = this.goalUpdatedSource.asObservable();
+  readonly goalListUpdated$ = this.goalListUpdatedSource.asObservable();
+
+  constructor(private http: HttpClient, private budgetService: BudgetService) { }
 
   get(goalId: Number | String): Observable<Goal> {
     return this.http.get(`${this.goalUrl}/${goalId}`)
@@ -28,21 +33,23 @@ export class GoalService {
       .pipe(map((response: Object) => (<Object[]>response).map(this.createGoalFrom.bind(this))));
   }
 
-  createGoal(accountId: Number | String, goal: Goal): Observable<Goal> {
+  createGoal(account: Account, goal: Goal): Observable<Goal> {
     return this.calculate(goal)
-      .pipe(concatMap((goal) => this.http.post(`${this.accountUrl}/${accountId}/goal`, goal)),
-        map(this.createGoalFrom.bind(this)), map(this.goalUpdated.bind(this)));
+      .pipe(concatMap((goal) => this.http.post(`${this.accountUrl}/${account.id}/goal`, goal)),
+        map(this.createGoalFrom.bind(this)),
+        map((goal: Goal) => this.goalUpdated(account, goal)));
   }
 
-  update(goal: Goal) {
+  update(account: Account, goal: Goal) {
     return this.calculate(goal)
       .pipe(concatMap((goal) => this.http.put(`${this.goalUrl}/${goal.id}`, goal)),
-        map(this.createGoalFrom.bind(this)), map(this.goalUpdated.bind(this)));
+        map(this.createGoalFrom.bind(this)),
+        map((goal: Goal) => this.goalUpdated(account, goal)));
   }
 
-  delete(goalId: number | string | Number | String): Observable<Object> {
-    return this.http.delete(`${this.goalUrl}/${goalId}`)
-      .pipe(map(this.goalUpdated.bind(this)));
+  delete(account: Account, goal: Goal): Observable<Object> {
+    return this.http.delete(`${this.goalUrl}/${goal.id}`)
+      .pipe(map(() => this.goalUpdated(account, goal)));
   }
 
   exist(accountId: Number | String, goal: Goal): Observable<boolean> {
@@ -58,9 +65,16 @@ export class GoalService {
     return Object.assign(new Goal(), object);
   }
 
-  goalUpdated(goal: Goal): Goal | any {
+  goalUpdated(account: Account, goal: Goal): Goal | any {
     this.goalUpdatedSource.next(goal);
+    this.budgetService.budgetUpdated(account, goal);
+    this.getGoalList(account.id).subscribe(this.goalListUpdated.bind(this));
     return goal;
+  }
+
+  goalListUpdated(goalList: Goal[]): Goal[] {
+    this.goalListUpdatedSource.next(goalList);
+    return goalList;
   }
 
   private get accountUrl(): string {

@@ -38,7 +38,6 @@ import { TransactionAllocationDetailsComponent } from './component/transaction-a
   ],
 
   providers: [
-    TransactionService,
     AllocationService,
     TransactionAllocationModalService
   ],

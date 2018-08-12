@@ -101,7 +101,7 @@ export class GoalModalComponent extends AbstractFormComponent implements OnInit,
 
   delete() {
     if (this.allowDelete) {
-      this.goalService.delete(this.goal.id).subscribe(this.activeModal.dismiss);
+      this.goalService.delete(this.account, this.goal).subscribe(this.activeModal.dismiss);
     }
   }
 

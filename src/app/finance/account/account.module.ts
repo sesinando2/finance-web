@@ -65,7 +65,6 @@ import {AccountTotalBreakdownResolve} from "./resolve/account-total-breakdown.re
     AccountTransactionListResolve,
     AccountBreakdownResolve,
     AccountTotalBreakdownResolve,
-    AccountService,
     AccountBreadcrumbService
   ]
 })

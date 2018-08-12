@@ -42,11 +42,6 @@ import {GoalModalComponent} from './component/goal-modal/goal-modal.component';
     GoalModalComponent
   ],
 
-  providers: [
-    BudgetService,
-    BudgetModalService
-  ],
-
   entryComponents: [
     BudgetModalComponent,
     GoalModalComponent

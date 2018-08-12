@@ -6,11 +6,16 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from "rxjs/Observable";
 import {map} from "rxjs/operators";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AccountService {
 
   private readonly accountUpdatedSource = new Subject<Account>();
+  private readonly accountListUpdatedSource = new Subject<Account[]>();
+
   readonly accountUpdated$ = this.accountUpdatedSource.asObservable();
+  readonly accountListUpdated$ = this.accountListUpdatedSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -50,7 +55,13 @@ export class AccountService {
 
   accountUpdated(account: Account): Account | any {
     this.accountUpdatedSource.next(account);
+    this.list().subscribe(this.accountListUpdated.bind(this));
     return account;
+  }
+
+  accountListUpdated(accountList: Account[]): Account[] {
+    this.accountListUpdatedSource.next(accountList);
+    return accountList;
   }
 
   private createAccountFrom(json: Object): Account {

@@ -85,7 +85,7 @@ export class AccountTransactionNewComponent implements OnInit, OnDestroy{
   save() {
     if (this.allowSave) {
       Object.assign(this.transaction, this.form.value);
-      this.transactionService.save(this.account.id, this.transaction)
+      this.transactionService.save(this.account, this.transaction)
         .subscribe(this.navigateToTransactionList.bind(this));
     }
   }

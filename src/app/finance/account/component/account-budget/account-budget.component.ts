@@ -48,7 +48,7 @@ export class AccountBudgetComponent implements OnInit, OnDestroy {
   newBudget(): void {
     this.budgetModalService.open(this.account)
       .then((budget: Budget) =>
-        this.budgetService.createBudget(this.account.id, budget).toPromise())
+        this.budgetService.createBudget(this.account, budget).toPromise())
       .catch(() => { /* Ignore */ });
   }
 
@@ -62,7 +62,7 @@ export class AccountBudgetComponent implements OnInit, OnDestroy {
 
     this.budgetService.get(budget.id).subscribe((budget: Budget) => {
       this.budgetModalService.open(this.account, budget, 'Edit Budget')
-        .then((budget: Budget) => this.budgetService.update(budget).toPromise())
+        .then((budget: Budget) => this.budgetService.update(this.account, budget).toPromise())
         .catch(() => { /* Ignore */ });
     });
   }
@@ -80,18 +80,18 @@ export class AccountBudgetComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToChanges(): Subscription {
-    return Observable.merge(this.budgetService.budgetUpdated$, this.goalService.goalUpdated$)
-      .pipe(concatMap(this.reloadBudgetList.bind(this)))
-      .subscribe((response) => {
-        this.budgetList = response[0];
-        this.goalList = response[1];
-        this.cd.detectChanges();
-      });
-  }
+    let subscription = new Subscription();
 
-  private reloadBudgetList(): Observable<any[]> {
-    let budgetList = this.budgetService.getBudgetList(this.account.id, this.currentFrequency);
-    let goalList = this.goalService.getGoalList(this.account.id, this.currentFrequency);
-    return Observable.combineLatest(budgetList, goalList);
+    subscription.add(this.budgetService.budgetListUpdated$.subscribe((budgetList: Budget[]) => {
+      this.budgetList = budgetList;
+      this.cd.detectChanges();
+    }));
+
+    subscription.add(this.goalService.goalListUpdated$.subscribe((goalList: Goal[]) => {
+      this.goalList = goalList;
+      this.cd.detectChanges();
+    }));
+
+    return subscription;
   }
 }

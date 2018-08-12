@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-import { StackedBreakdownChartComponent } from './stacked-breakdown-chart.component';
+import {StackedBreakdownChartComponent} from './stacked-breakdown-chart.component';
 
 describe('StackedBreakdownChartComponent', () => {
   let component: StackedBreakdownChartComponent;
@@ -8,7 +10,13 @@ describe('StackedBreakdownChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StackedBreakdownChartComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        NgxChartsModule
+      ],
+      declarations: [
+        StackedBreakdownChartComponent
+      ]
     })
     .compileComponents();
   }));

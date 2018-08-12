@@ -4,7 +4,9 @@ import {Budget} from "../../../model/budget.model";
 import {BudgetModalComponent} from "../../component/budget-modal/budget-modal.component";
 import {Account} from "../../../model/account.model";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class BudgetModalService {
 
   constructor(private modalService: NgbModal) { }

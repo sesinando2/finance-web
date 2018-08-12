@@ -1,19 +1,27 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+
 import {Transaction} from '../../../model/transaction.model';
 import {AllocationService} from '../allocation/allocation.service';
-import {HttpClient} from '@angular/common/http';
 import {Allocation} from '../../../model/allocation.model';
 import {environment} from '../../../../../environments/environment';
-import {Subject} from 'rxjs/Subject';
 import {AccountService} from '../../../account/service/account/account.service';
+
+import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {map} from 'rxjs/operators';
+import {Account} from "../../../model/account.model";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TransactionService {
 
   private readonly transactionUpdatedSource: Subject<Transaction> = new Subject<Transaction>();
+  private readonly transactionListUpdatedSource: Subject<Transaction[]> = new Subject<Transaction[]>();
+
   readonly transactionUpdated$: Observable<Transaction> = this.transactionUpdatedSource.asObservable();
+  readonly transactionListUpdated$: Observable<Transaction[]> = this.transactionListUpdatedSource.asObservable();
 
   constructor(private http: HttpClient,
               private accountService: AccountService,
@@ -24,15 +32,15 @@ export class TransactionService {
       .pipe(map(this.createTransactionsFrom.bind(this)));
   }
 
-  save(accountId: Number | String, transaction: Transaction): Observable<Transaction> {
-    return this.http.post(this.getAccountTransactionUrl(accountId), transaction)
+  save(account: Account, transaction: Transaction): Observable<Transaction> {
+    return this.http.post(this.getAccountTransactionUrl(account.id), transaction)
       .pipe(map(this.createTransactionFrom.bind(this)),
-            map(this.transactionUpdated.bind(this)));
+            map((transaction: Transaction) => this.transactionUpdated(account, transaction)));
   }
 
-  delete(transactionId: Number): Observable<Object> {
-    return this.http.delete(`${this.transactionUrl}/${transactionId}`)
-      .pipe(map(this.transactionUpdated.bind(this)));
+  delete(account: Account, transaction: Transaction): Observable<Transaction> {
+    return this.http.delete(`${this.transactionUrl}/${transaction.id}`)
+      .pipe(map((transaction: Transaction) => this.transactionUpdated(account, transaction)));
   }
 
   createTransactionsFrom(objectArray: Object[]): Transaction[] {
@@ -46,10 +54,16 @@ export class TransactionService {
     return transaction;
   }
 
-  transactionUpdated(transaction: Transaction) {
+  transactionUpdated(account: Account, transaction: Transaction) {
     this.transactionUpdatedSource.next(transaction);
-    this.accountService.accountUpdated(null);
+    this.accountService.accountUpdated(account);
+    this.list(account.id).subscribe(this.transactionListUpdated.bind(this));
     return transaction;
+  }
+
+  transactionListUpdated(transactionList: Transaction[]) {
+    this.transactionListUpdatedSource.next(transactionList);
+    return transactionList;
   }
 
   private get accountUrl(): string {

@@ -61,7 +61,7 @@ export class BudgetModalComponent extends AbstractFormComponent implements OnIni
 
   delete() {
     if (this.allowDelete) {
-      this.budgetService.delete(this.budget.id).subscribe(this.activeModal.dismiss);
+      this.budgetService.delete(this.account, this.budget).subscribe(this.activeModal.dismiss);
     }
   }
 

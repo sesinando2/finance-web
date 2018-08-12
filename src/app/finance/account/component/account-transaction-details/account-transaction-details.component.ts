@@ -2,9 +2,9 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
 import {Transaction} from "../../../model/transaction.model";
 import {Account} from "../../../model/account.model";
-import {Subscription} from "rxjs/Subscription";
 import {TransactionService} from "../../../transaction/service/transaction/transaction.service";
 import {AccountService} from "../../service/account/account.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-account-transaction-details',
@@ -16,7 +16,7 @@ export class AccountTransactionDetailsComponent implements OnInit, OnDestroy {
   account: Account;
   transactionList: Transaction[] = [];
 
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
 
   constructor(private route: ActivatedRoute,
               private cd: ChangeDetectorRef,
@@ -24,10 +24,10 @@ export class AccountTransactionDetailsComponent implements OnInit, OnDestroy {
               private transactionService: TransactionService) { }
 
   ngOnInit() {
-    this.subscription = this.route.parent.data.subscribe(this.updateAccount.bind(this));
+    this.subscription.add(this.route.parent.data.subscribe(this.updateAccount.bind(this)));
     this.subscription.add(this.route.data.subscribe(this.updateTransactionList.bind(this)));
     this.subscription.add(this.accountService.accountUpdated$.subscribe(this.refreshAccount.bind(this)));
-    this.subscription.add(this.transactionService.transactionUpdated$.subscribe(this.refreshTransactionList.bind(this)));
+    this.subscription.add(this.transactionService.transactionListUpdated$.subscribe(this.refreshTransactionList.bind(this)));
   }
 
   ngOnDestroy() {
@@ -44,17 +44,15 @@ export class AccountTransactionDetailsComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  private refreshAccount() {
-    this.accountService.get(this.account.id).subscribe((account) => {
+  private refreshAccount(account: Account) {
+    if (this.account.id == account.id) {
       this.account = account;
       this.cd.detectChanges();
-    });
+    }
   }
 
-  private refreshTransactionList() {
-    this.transactionService.list(this.account.id).subscribe((transactionList) => {
-      this.transactionList = transactionList;
-      this.cd.detectChanges();
-    });
+  private refreshTransactionList(transactionList: Transaction[]) {
+    this.transactionList = transactionList;
+    this.cd.detectChanges();
   }
 }

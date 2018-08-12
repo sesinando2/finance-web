@@ -14,7 +14,7 @@ import {RoutingService} from "../../../../service/routing/routing.service";
 export class AccountListComponent implements OnInit, OnDestroy{
 
   accountList: Account[] = [];
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
 
   constructor(private route: ActivatedRoute,
               private cd: ChangeDetectorRef,
@@ -23,8 +23,8 @@ export class AccountListComponent implements OnInit, OnDestroy{
               private accountBreadcrumbService: AccountBreadcrumbService) { }
 
   ngOnInit() {
-    this.subscription = this.route.data.subscribe(this.updateData.bind(this));
-    this.subscription.add(this.accountService.accountUpdated$.subscribe(this.reloadAccountList.bind(this)));
+    this.subscription.add(this.subscribeToData());
+    this.subscription.add(this.subscribeToAccountListUpdated());
   }
 
   ngOnDestroy(): void {
@@ -42,14 +42,18 @@ export class AccountListComponent implements OnInit, OnDestroy{
     return <string[]>route.concat(context);
   }
 
+  private subscribeToData(): Subscription {
+    return this.route.data.subscribe(this.updateData.bind(this));
+  }
+
+  private subscribeToAccountListUpdated(): Subscription {
+    return this.accountService.accountListUpdated$.subscribe(this.updateAccountList.bind(this));
+  }
+
   private updateData(data: Data) {
     if (data.hasOwnProperty('accountList')) {
       this.updateAccountList(data['accountList']);
     }
-  }
-
-  private reloadAccountList() {
-    this.accountService.list().subscribe(this.updateAccountList.bind(this));
   }
 
   private updateAccountList(accountList: Account[]): void {

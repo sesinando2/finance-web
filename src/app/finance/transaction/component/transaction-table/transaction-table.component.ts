@@ -51,7 +51,7 @@ export class TransactionTableComponent implements OnChanges, OnDestroy {
   }
 
   delete(transaction: Transaction): void {
-    this.transactionService.delete(transaction.id).subscribe();
+    this.transactionService.delete(this.account, transaction).subscribe();
   }
 
   select(transaction: Transaction): void {

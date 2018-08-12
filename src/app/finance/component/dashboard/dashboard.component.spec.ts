@@ -9,12 +9,10 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {CommonModule} from "@angular/common";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RoutingService} from "../../../service/routing/routing.service";
-import {BreakdownChartComponent} from "../../breakdown/component/breakdown-chart/breakdown-chart.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {AllAccountChartComponent} from "../all-account-chart/all-account-chart.component";
-import {AccountBreakdownChartComponent} from "../../breakdown/component/account-breakdown-chart/account-breakdown-chart.component";
-import {BreakdownTrendsChartComponent} from "../../breakdown/component/breakdown-trends-chart/breakdown-trends-chart.component";
+import {BreakdownModule} from "../../breakdown/breakdown.module";
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -29,6 +27,7 @@ describe('DashboardComponent', () => {
         NgxChartsModule,
 
         BudgetModule,
+        BreakdownModule,
 
         RouterTestingModule,
         HttpClientTestingModule
@@ -37,10 +36,7 @@ describe('DashboardComponent', () => {
       declarations: [
         DashboardComponent,
 
-        AllAccountChartComponent,
-        AccountBreakdownChartComponent,
-        BreakdownChartComponent,
-        BreakdownTrendsChartComponent
+        AllAccountChartComponent
       ],
 
       providers: [RoutingService]
