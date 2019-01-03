@@ -44,9 +44,11 @@ export class BudgetChartComponent extends AbstractChartComponent implements OnIn
 
   private updateChartData(): void {
     if (this.budgetList == null) return;
-    this.chartData = this.budgetList.map((budget: Budget) => {
-      return { name: budget.name, value: budget.amount, id: budget.id };
-    });
+    this.chartData = this.budgetList
+      .sort((a: Budget, b: Budget) => <any>b.amount - <any>a.amount)
+      .map((budget: Budget) => {
+        return { name: budget.name, value: budget.amount, id: budget.id };
+      });
     this.cd.detectChanges();
   }
 }
