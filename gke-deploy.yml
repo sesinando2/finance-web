@@ -1,4 +1,34 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: default
+data:
+  default.conf: |
+    server {
+      listen 80;
+      charset utf-8;
+      sendfile on;
+      root /home/deploy/finance-web;
+
+
+      location / {
+        expires -1;
+        add_header Pragma "no-cache";
+        add_header Cache-Control "no-store, no-cache, must-revalidate, post-check=0, pre-check=0";
+
+        try_files $uri $uri/ /index.html = 404;
+      }
+
+      location /api {
+        rewrite ^/api/(.*) /$1 break;
+
+        proxy_pass http://localhost:10081;
+        proxy_redirect off;
+      }
+    }
+---
+apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -11,10 +41,6 @@ spec:
     protocol: TCP
     targetPort: 80
     name: web
-  - port: 10081
-    protocol: TCP
-    targetPort: 10081
-    name: api
   selector:
     app: finance
   type: LoadBalancer
@@ -33,9 +59,12 @@ spec:
     spec:
       containers:
         - name: finance
-          image: gcr.io/alert-synapse-211723/finance-web:0.0.9
+          image: gcr.io/alert-synapse-211723/finance-web:0.0.2
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
         - name: finance-api
           image: gcr.io/alert-synapse-211723/finance:0.0.1
           ports:
@@ -54,16 +83,16 @@ spec:
                   name: cloudsql-db-credentials
                   key: password
             - name: SECURITY_OAUTH2_CLIENT_ACCESS-TOKEN-URI
-              value: http://35.201.27.17/oauth/token
+              value: http://35.244.87.129/oauth/token
             - name: SECURITY_OAUTH2_CLIENT_USER-AUTHORIZATION-URI
-              value: http://35.201.27.17/oauth/authorize
+              value: http://35.244.87.129/oauth/authorize
             - name: SECURITY_OAUTH2_RESOURCE_JWT_KEY-SET-URI
-              value: http://35.201.27.17/oauth/token_key
+              value: http://35.244.87.129/oauth/token_key
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.11
           command: ["/cloud_sql_proxy",
-                    "-instances=alert-synapse-211723:australia-southeast1:mysql-db=tcp:3306",
-                    "-credential_file=/secrets/cloudsql/credentials.json"]
+                    "-instances=alert-synapse-211723:australia-southeast1:mysql-instance=tcp:3306",
+                    "-credential_file=/secrets/cloudsql/alert-synapse-211723-bc719d7724f8.json"]
           volumeMounts:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
@@ -72,3 +101,7 @@ spec:
         - name: cloudsql-instance-credentials
           secret:
             secretName: cloudsql-instance-credentials
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+
