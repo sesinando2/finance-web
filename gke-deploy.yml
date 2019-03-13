@@ -79,14 +79,14 @@ spec:
     spec:
       containers:
         - name: finance
-          image: gcr.io/alert-synapse-211723/finance-web:0.0.2
+          image: index.docker.io/sesinando2/finance-web:0.0.2
           ports:
             - containerPort: 80
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d
         - name: finance-api
-          image: gcr.io/alert-synapse-211723/finance:0.0.1
+          image: index.docker.io/sesinando2/finance:0.0.1
           ports:
             - containerPort: 10081
           env:
@@ -109,7 +109,7 @@ spec:
             - name: SECURITY_OAUTH2_RESOURCE_JWT_KEY-SET-URI
               value: 127.0.0.1:10080/oauth/token_key
         - name: auth-api
-          image: gcr.io/alert-synapse-211723/auth:0.0.1
+          image: index.docker.io/sesinando2/auth:0.0.1
           ports:
             - containerPort: 10080
           env:
